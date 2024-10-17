@@ -1,4 +1,4 @@
-import configuracao from "../shared/setting/configuration";
+import configuracao from "../../shared/setting/configuration";
 
 
 export async function login(username: string, password: string) {
