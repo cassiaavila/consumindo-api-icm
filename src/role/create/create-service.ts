@@ -1,20 +1,21 @@
 import configuracao from "../../shared/setting/configuration";
-import { ListRole } from "./data-type/list-data";
+import {CreateRole} from "./data-type/create-data";
 
 
-export async function listRole(filter: ListRole.Filter, token: string): Promise<ListRole.Result> {
+export async function createRole(roleName: string, token: string): Promise<CreateRole.Role> {
     try {
-        const response = await fetch(configuracao.api + `roles?offset=${filter.offset}&limit=${filter.limit}`, {
-            method: 'GET',
+        const response = await fetch(configuracao.api + 'roles', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token,
             },
+            body: JSON.stringify({name: roleName}),
         })
-
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Erro ao tentar fazer login: ${response.status} - ${response.statusText}. Detalhes: ${errorMessage}`);
+
         }
 
         return await response.json();
@@ -23,4 +24,3 @@ export async function listRole(filter: ListRole.Filter, token: string): Promise<
         throw err
     }
 }
-
