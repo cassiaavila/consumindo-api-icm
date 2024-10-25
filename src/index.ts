@@ -6,23 +6,32 @@ import {createRole} from "./role/create/create-service";
 import {findRole} from "./role/find/find-service";
 import {deleteRole} from "./role/delete/delete-service";
 import {DeleteRole} from "./role/delete/data-type/delete-data";
+import {updateRole} from "./role/update/update-service";
+import {CreateRole} from "./role/create/data-type/create-data";
+import {createAccount} from "./account/create/create-service";
 
 
 async function main() {
     try {
         const auth: Data.Auth = await login(configuracao.usuario, configuracao.password)
-        const role = await createRole('PROFESSORA', auth.token);
+        // const role = await createRole('PROFESSORA', auth.token);
         const list = await listRole({offset: 0, limit: 10}, auth.token)
-        const find = await findRole({id: role.id}, auth.token);
-        // console.log(list)
         console.log(auth.token)
-        console.log(find)
-        const deleteR = await deleteRole({ id: find.id }, auth.token);
-        console.log('delete  '+ deleteR)
-        console.log(await findRole({id: role.id}, auth.token))
+        let resultRole
+        for( const role of list.data){
+            if(role.name == 'UNGIDO'){
+                resultRole = role
+            }
+        }
+        if(!resultRole){
+            throw new Error('Role não encontrada')
+        }
+        const accounT = await createAccount({username: 'cassia@gmail.com', roleId: resultRole.id}, auth.token)
+        console.log(accounT)
+
 
     } catch (e) {
-        console.error(e)
+        console.error('FunctionMain:\n', e)
     }
 }
 

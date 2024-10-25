@@ -14,13 +14,13 @@ export async function createRole(roleName: string, token: string): Promise<Creat
         })
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`Erro ao tentar fazer login: ${response.status} - ${response.statusText}. Detalhes: ${errorMessage}`);
+            throw new Error(`Erro ao tentar criar role: ${response.status} - ${response.statusText}. Detalhes: ${errorMessage}`);
 
         }
 
         return await response.json();
     } catch (err) {
-        console.error(err);
+        console.error('FunctionCreateRole:\n', err)
         throw err
     }
 }
