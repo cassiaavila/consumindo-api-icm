@@ -14,6 +14,10 @@ import {FindAccount} from "./account/find/data-type/find-data";
 import {findAccount} from "./account/find/find-service";
 import {deleteAccount} from "./account/delete/delete-service";
 import {DeleteAccount} from "./account/delete/data-type/delete-data";
+import {updateAccount} from "./account/update/update-service";
+import {UpdateAccount} from "./account/update/data-type/update-data";
+import {forgotAuth} from "./auth/forgot/forgot-service";
+import {resetPasswordService} from "./auth/reset-password/reset-password-service";
 
 
 async function main() {
@@ -24,7 +28,7 @@ async function main() {
         //console.log(auth.token)
         let resultRole
         for (const role of list.data) {
-            if (role.name == 'UNGIDO') {
+            if (role.name == 'SECRETARY') {
                 resultRole = role
             }
         }
@@ -35,10 +39,10 @@ async function main() {
         //const accounT = await createAccount({username: 'cassia@gmail.com', roleId: resultRole.id}, auth.token)
         //console.log(accounT)
         const listAccountT = await listAccount({offset: 0, limit: 10}, auth.token)
-        //console.log(listAccountT)
+        console.log(listAccountT)
         let resultAccount
         for (const account of listAccountT.data) {
-            if (account.username == 'cassia@gmail.com') {
+            if (account.username == 'sdcassia2@gmail.com') {
                 resultAccount = account
                 console.log(account)
 
@@ -49,10 +53,14 @@ async function main() {
         }
         //const findAccountT = await  findAccount({id: listAccountT.data[0].id}, auth.token)
         //console.log('Começo Find', findAccountT)
-        const deleAccountT = await deleteAccount({id: resultAccount.id}, auth.token)
-        console.log(deleAccountT)
-
-
+        //const deleAccountT = await deleteAccount({id: resultAccount.id}, auth.token)
+        //console.log(deleAccountT)
+        // const updateAccountT = await  updateAccount({ id: listAccountT.data[0].id }, { roleId: resultRole.id }, auth.token)
+        //console.log(updateAccountT)
+        //const authForgotT = await forgotAuth({email: 'sdcassia2@gmail.com'})
+        //console.log('forgot', authForgotT)
+        const resetPasswordT = await resetPasswordService({password: '1234',forgotCode: 'GRZOQWSG',username: 'sdcassia2@gmail.com'})
+        console.log('resetPassword', resetPasswordT)
     } catch (e) {
         console.error('FunctionMain:\n', e)
     }

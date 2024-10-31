@@ -1,15 +1,17 @@
 import configuracao from "../../shared/setting/configuration";
-import {DeleteAccount} from "./data-type/delete-data";
+import {UpdateAccount} from "./data-type/update-data";
 
 
-export async function deleteAccount(param: DeleteAccount.Param, token: string): Promise<DeleteAccount.Account> {
+export async function updateAccount(param: UpdateAccount.Param, body: UpdateAccount.Body, token: string): Promise<UpdateAccount.Account> {
     try {
-        const response = await fetch(configuracao.api + 'accounts/' + param.id, {
-            method: 'DELETE',
+
+        const response = await fetch(configuracao.api + `accounts/` + param.id, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token,
-            }
+            },
+            body: JSON.stringify(body),
         })
         if (!response.ok) {
             const errorMessage = await response.text();
@@ -18,7 +20,8 @@ export async function deleteAccount(param: DeleteAccount.Param, token: string): 
         return await response.json();
 
     } catch (err) {
-        console.error("Error deleting account");
+        console.error("Failed to update account");
         throw err;
     }
+
 }
