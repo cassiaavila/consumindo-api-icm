@@ -11,7 +11,7 @@ export namespace CreateAccount {
     export type Account={
         id: string,
         username: string,
-        role: CreateRole.Role,
+        role: CreateRole.Role | null,
         expireCodeAt: Date |null,
         forgotCode: string,
         addressId: string,

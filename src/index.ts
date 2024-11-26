@@ -18,6 +18,10 @@ import {updateAccount} from "./account/update/update-service";
 import {UpdateAccount} from "./account/update/data-type/update-data";
 import {forgotAuth} from "./auth/forgot/forgot-service";
 import {resetPasswordService} from "./auth/reset-password/reset-password-service";
+import {listToSelectService} from "./account/list-to-select/list-to select-service";
+import {listPerson} from "./person/list/list-service";
+import {createService} from "./person/create/create-service";
+import {CreatePerson} from "./person/create/data-type/person-data";
 
 
 async function main() {
@@ -25,7 +29,8 @@ async function main() {
         const auth: Data.Auth = await login(configuracao.usuario, configuracao.password)
         // const role = await createRole('PROFESSORA', auth.token);
         const list = await listRole({offset: 0, limit: 10}, auth.token)
-        //console.log(auth.token)
+        console.log(auth.token)
+        console.log(list)
         let resultRole
         for (const role of list.data) {
             if (role.name == 'SECRETARY') {
@@ -59,8 +64,13 @@ async function main() {
         //console.log(updateAccountT)
         //const authForgotT = await forgotAuth({email: 'sdcassia2@gmail.com'})
         //console.log('forgot', authForgotT)
-        const resetPasswordT = await resetPasswordService({password: '1234',forgotCode: 'GRZOQWSG',username: 'sdcassia2@gmail.com'})
-        console.log('resetPassword', resetPasswordT)
+        //const resetPasswordT = await resetPasswordService({password: '1234',forgotCode: 'GRZOQWSG',username: 'sdcassia2@gmail.com'})
+        //console.log('resetPassword', resetPasswordT)
+        const listToSelectAccount = await  listToSelectService({}, auth.token)
+        console.log(listToSelectAccount)
+        const createPerson1 = await createService({accountId: '8063e923-f3cb-425b-9ec6-a9483e305074', cpf: '26839626814', name: 'Aparecida de Cássia', phone: '63 992029088', birthday: new Date }, auth.token)
+        const listPerson1 = await listPerson({offset: 0, limit: 10}, auth.token)
+        console.log(listPerson1)
     } catch (e) {
         console.error('FunctionMain:\n', e)
     }

@@ -10,4 +10,12 @@ export namespace CreatePerson {
         isActive: boolean,
 
     }
+    export type Body={
+        accountId: string,
+        name: string,
+        cpf: string,
+        phone: string,
+        birthday: Date
+
+    }
 }
