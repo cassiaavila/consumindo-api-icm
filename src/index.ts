@@ -22,6 +22,8 @@ import {listToSelectService} from "./account/list-to-select/list-to select-servi
 import {listPerson} from "./person/list/list-service";
 import {createService} from "./person/create/create-service";
 import {CreatePerson} from "./person/create/data-type/person-data";
+import {findService} from "./person/find/find-service";
+import {updatePerson} from "./person/update/update-service";
 
 
 async function main() {
@@ -66,11 +68,18 @@ async function main() {
         //console.log('forgot', authForgotT)
         //const resetPasswordT = await resetPasswordService({password: '1234',forgotCode: 'GRZOQWSG',username: 'sdcassia2@gmail.com'})
         //console.log('resetPassword', resetPasswordT)
-        const listToSelectAccount = await  listToSelectService({}, auth.token)
+        const listToSelectAccount = await listToSelectService({}, auth.token)
         console.log(listToSelectAccount)
-        const createPerson1 = await createService({accountId: '8063e923-f3cb-425b-9ec6-a9483e305074', cpf: '26839626814', name: 'Aparecida de Cássia', phone: '63 992029088', birthday: new Date }, auth.token)
+        //const createPerson1 = await createService({accountId: '8063e923-f3cb-425b-9ec6-a9483e305074', cpf: '26839626814', name: 'Aparecida de Cássia', phone: '63 992029088', birthday: new Date }, auth.token)
         const listPerson1 = await listPerson({offset: 0, limit: 10}, auth.token)
-        console.log(listPerson1)
+        console.log('Listar pessoa', listPerson1)
+        const findPerson = await findService({id: '09380717-d445-45aa-bd6c-d236b7291452'}, auth.token)
+        console.log(findPerson)
+        const updatePerson1 = await updatePerson({id: '09380717-d445-45aa-bd6c-d236b7291452'}, {name: 'Aparecida'}, auth.token)
+        console.log('Atualizar pessoa', updatePerson1)
+
+
+
     } catch (e) {
         console.error('FunctionMain:\n', e)
     }
