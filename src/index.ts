@@ -24,6 +24,7 @@ import {createService} from "./person/create/create-service";
 import {CreatePerson} from "./person/create/data-type/person-data";
 import {findService} from "./person/find/find-service";
 import {updatePerson} from "./person/update/update-service";
+import {createAddress} from "./address/create/create-service";
 
 
 async function main() {
@@ -77,6 +78,16 @@ async function main() {
         console.log(findPerson)
         const updatePerson1 = await updatePerson({id: '09380717-d445-45aa-bd6c-d236b7291452'}, {name: 'Aparecida'}, auth.token)
         console.log('Atualizar pessoa', updatePerson1)
+        const body = {
+            street: 'Bahia',
+            number: 168,
+            reference: '',
+            neighborhood: 'JK',
+            city: 'Dianópolis',
+            state: 'Tocantins'
+        }
+        const createAddress1 = await createAddress( body, auth.token)
+        console.log('Criar Address' , createAddress1)
 
 
 
